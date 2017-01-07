@@ -1,0 +1,1 @@
+# NW.js starter template

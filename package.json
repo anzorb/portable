@@ -1,0 +1,48 @@
+{
+  "name": "Portable",
+  "description": "Portable",
+  "version": "1.0.0",
+  "main": "public/index.html",
+  "author": "Anzor Bashkhaz",
+  "license": "ISC",
+  "devDependencies": {
+    "ampersand-app": "^1.0.4",
+    "ampersand-router": "^3.0.2",
+    "autoprefixer": "^6.6.1",
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "css-loader": "^0.26.1",
+    "ejs-loader": "^0.2.1",
+    "hjs-webpack": "^2.13.1",
+    "node-sass": "^4.1.1",
+    "nw": "^0.12.3",
+    "react-dom": "^15.4.2",
+    "sass-loader": "^4.1.1",
+    "style-loader": "^0.13.1",
+    "underscore": "^1.8.3",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2",
+    "yeticss": "^7.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boymanjor/nwjs-git-branch-delete.git"
+  },
+  "scripts": {
+    "start": "nw ./public/",
+    "watch": "webpack-dev-server",
+    "dev": "webpack-dev-server --config tasks/webpack.config.dev.js",
+    "build": "webpack --output-path public --optimize-dedupe",
+    "dist": "npm run lint && webpack --config tasks/webpack.config.prod.js --progress --colors && npm run bump",
+    "test": "standard"
+  },
+  "dependencies": {
+    "material-ui": "^0.16.6",
+    "mime": "^1.3.4",
+    "react": "^15.4.2",
+    "react-infinite": "^0.10.0",
+    "react-tap-event-plugin": "^2.0.1"
+  }
+}

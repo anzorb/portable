@@ -1,0 +1,11 @@
+{
+  "name": "Portable",
+  "main": "http://localhost:3000",
+  "node-remote": "http://localhost",
+  "webkit": {
+    "plugin": true
+  },
+  "dependencies": {
+    "react-infinite": "^0.10.0"
+  }
+}
