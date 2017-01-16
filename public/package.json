@@ -7,5 +7,6 @@
   },
   "dependencies": {
     "react-infinite": "^0.10.0"
-  }
+  },
+  "js-flags": "--enable-node-worker"
 }

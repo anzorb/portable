@@ -63,3 +63,14 @@
 .flex-alignself-stretch {
     align-self: stretch;
 }
+
+.material-icons.home {
+    cursor: pointer;
+    width: 36px;
+    color: white;
+    height: 47px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

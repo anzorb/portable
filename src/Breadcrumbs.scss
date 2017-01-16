@@ -1,0 +1,15 @@
+.breadcrumbs {
+    a {
+        float: left;
+        text-decoration: none;
+        margin: 5px;
+        margin-right: 0px;
+    }
+    .breadcrumbs__chip {
+        cursor: pointer;
+    }
+    .breadcrumbs__chip--highlight {
+        background-color: #AAA;
+        color: white;
+    }
+}

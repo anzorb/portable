@@ -1,0 +1,29 @@
+.file-list {
+    a {
+        text-decoration: none !important;
+    }
+    .list-item {
+        color: rgba(0, 0, 0, 0.870588);
+        height: 50px;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        .list-item__icon {
+            height: 24px;
+            margin: 12px;
+            left: 4px;
+            width: 24px;
+            font-size: 24px;
+            color: #5a5959;
+        }
+        .list-item__name {
+            line-height: 25px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+        &:hover {
+            background-color: #e2e2e2;
+        }
+    }
+}

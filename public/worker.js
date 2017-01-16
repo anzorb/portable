@@ -2,6 +2,11 @@ var fs = require('fs');
 var path = require('path');
 var mime = require('mime');
 
+
+var isUnixHiddenPath = function(path) {
+    return (/(^|\/)\.[^\/\.]/g).test(path);
+};
+
 self.onmessage = function(msg) {
     self.postMessage('message receieved');
     console.log(msg.data);
@@ -12,12 +17,14 @@ self.onmessage = function(msg) {
         fileList.forEach(file => {
             const filePath = path.join(dirPath, file);
             const stat = fs.statSync(filePath);
-            files.push({
-                name: file,
-                path: filePath,
-                isDir: stat.isDirectory(),
-                mime: mime.lookup(filePath)
-            });
+            if (!isUnixHiddenPath(file)) {
+                files.push({
+                    name: file,
+                    path: filePath,
+                    isDir: stat.isDirectory(),
+                    mime: mime.lookup(filePath)
+                });
+            }
         });
         self.postMessage({
             action: 'readdir',
