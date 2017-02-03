@@ -6,7 +6,6 @@ import Chip from 'material-ui/Chip';
 const Breadcrumbs = ({ url }) => {
     const tokens = url.split('/');
     tokens.splice(0, 1);
-    console.log(tokens);
     const renderBreadcrumbs = () => {
         let fullRoute = '';
         let idx = 0;
@@ -23,7 +22,6 @@ const Breadcrumbs = ({ url }) => {
             } else {
                 styles = {};
             }
-            console.log(Chip);
             return (
                 <Link key={id} to={`goto/${fullRoute}`}>
                     <Chip className="breadcrumbs__chip">{ token }</Chip>

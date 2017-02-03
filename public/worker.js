@@ -8,7 +8,6 @@ var isUnixHiddenPath = function(path) {
 };
 
 self.onmessage = function(msg) {
-    self.postMessage('message receieved');
     console.log(msg.data);
     if (msg.data.action && msg.data.action === 'readdir') {
         const dirPath = msg.data.payload.path;

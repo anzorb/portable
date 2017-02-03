@@ -14,14 +14,10 @@ import Breadcrumbs from './Breadcrumbs.jsx';
 import './FileList.scss';
 import 'react-virtualized/styles.css'; // only needs to be imported once
 import { Column, Table } from 'react-virtualized';
+import {connect} from 'react-redux';
+import {getDir} from './actions';
 
-const worker = new Worker('worker.js');
-worker.addEventListener('message', (msg) => {
-    console.log(msg.data);
-});
-worker.postMessage('hello');
-
-export default class Portable extends Component {
+export const FileList = class extends Component {
 
     constructor(props) {
         super(props);
@@ -39,19 +35,21 @@ export default class Portable extends Component {
         this.containerEl = ReactDOM.findDOMNode(this);
         window.addEventListener('resize', this.updateHeight);
         this.updateHeight();
-        const filePath = path.resolve(this.props.params.dirPath);
-        worker.addEventListener('message', (msg) => {
-            if (msg.data.action && msg.data.action === 'readdir') {
-                this.setState({ files: msg.data.payload.files });
-            }
-            this.setState({ loading: false });
-        });
-        fs.stat(filePath, (err, stats) => {
-            this.open({
-                path: filePath,
-                isDir: stats.isDirectory()
-            });
-        })
+        //populateList('/Users/anbas/Downloads/');
+        this.props.dispatch(getDir(this.props.routeParams.dirPath));
+        // const filePath = path.resolve(this.props.params.dirPath);
+        // worker.addEventListener('message', (msg) => {
+        //     if (msg.data.action && msg.data.action === 'readdir') {
+        //         this.setState({ files: msg.data.payload.files });
+        //     }
+        //     this.setState({ loading: false });
+        // });
+        // fs.stat(filePath, (err, stats) => {
+        //     this.open({
+        //         path: filePath,
+        //         isDir: stats.isDirectory()
+        //     });
+        // })
     }
 
     updateHeight() {
@@ -68,22 +66,23 @@ export default class Portable extends Component {
         this.setState({
             files: []
         });
-        const filePath = path.resolve(nextProps.params.dirPath);
-        worker.addEventListener('message', (msg) => {
-            if (msg.data.action && msg.data.action === 'readdir') {
-                this.setState({ files: msg.data.payload.files });
-            }
-            this.setState({ loading: false });
-        });
-        fs.stat(filePath, (err, stats) => {
-            if (!err) {
-                this.open({
-                    path: filePath,
-                    isDir: stats.isDirectory(),
-                    mime: mime.lookup(filePath)
-                });
-            }
-        })
+        this.props.dispatch(getDir(nextProps.params.dirPath));
+        // const filePath = path.resolve(nextProps.params.dirPath);
+        // worker.addEventListener('message', (msg) => {
+        //     if (msg.data.action && msg.data.action === 'readdir') {
+        //         this.setState({ files: msg.data.payload.files });
+        //     }
+        //     this.setState({ loading: false });
+        // });
+        // fs.stat(filePath, (err, stats) => {
+        //     if (!err) {
+        //         this.open({
+        //             path: filePath,
+        //             isDir: stats.isDirectory(),
+        //             mime: mime.lookup(filePath)
+        //         });
+        //     }
+        // })
     }
 
     open(file) {
@@ -135,10 +134,11 @@ export default class Portable extends Component {
     }
 
     renderFiles() {
-        if (!this.state.files) {
+        console.log(this.props);
+        if (!this.props.files) {
             return '';
         }
-        return this.state.files.map((file, id) => {
+        return this.props.files.map((file, id) => {
             let icon, content;
             const styles = {
                 'height': '48px'
@@ -203,11 +203,12 @@ export default class Portable extends Component {
     }
 
     render() {
+        console.log(this.props);
         const styles = {
             'height': '100%'
         };
         let content;
-        if (!this.state.files || this.state.loading) {
+        if (!this.props.files || this.state.loading) {
             content = (
                 <div className="flex-column flex-stretch flex-full flex-center">
                     <CircularProgress />
@@ -215,11 +216,13 @@ export default class Portable extends Component {
             )
         } else {
             content = (
-                <Infinite
-                containerHeight={this.state.containerHeight}
-                elementHeight={48}>
+                // <Infinite
+                // containerHeight={this.state.containerHeight}
+                // elementHeight={48}>
+                <ul className="flex-full scroll-area">
                     { this.renderFiles() }
-                </Infinite>
+                </ul>
+                //</Infinite>
             )
             //content = this.renderFiles();
         }
@@ -238,5 +241,12 @@ export default class Portable extends Component {
             </div>
             )
     }
-
 };
+
+function mapStateToProps(state) {
+    return {
+        files: state.files,
+    };
+};
+
+export const FileListConnected = connect(mapStateToProps)(FileList);
